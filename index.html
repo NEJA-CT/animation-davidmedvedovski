@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Pyxel Web runtime (via jsDelivr) -->
+  <script src="https://cdn.jsdelivr.net/gh/kitao/pyxel@2.5.7/wasm/pyxel.js"></script>
+  <title>Pyxel in Codespaces</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #eee;
+      font-family: system-ui, sans-serif;
+    }
+
+    .wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+    }
+
+    .tips {
+      opacity: .75;
+      font-size: 14px;
+      max-width: 720px;
+      text-align: center;
+    }
+
+    .tips code {
+      background: #222;
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <!-- Runs src/main.py from this repo over HTTP (served by Codespaces) -->
+    <pyxel-run root="." name="src/main.py" gamepad="enabled"></pyxel-run>
+
+    <div class="tips">
+      <div>💡 <strong>Edit</strong> <code>src/main.py</code>, <strong>save</strong>, then <strong>refresh this
+          page</strong>.</div>
+      <div>🎮 Use arrow keys and try <code>Q</code> to quit.</div>
+    </div>
+  </div>
+</body>
+
+</html>

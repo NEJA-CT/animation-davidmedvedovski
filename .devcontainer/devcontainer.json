@@ -1,0 +1,29 @@
+{
+  "name": "Pyxel Web",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "waitFor": "onCreateCommand",
+  "postCreateCommand": "",
+  "forwardPorts": [
+    5500
+  ],
+  "portsAttributes": {
+    "5500": {
+      "label": "Pyxel Web server",
+      "onAutoForward": "openPreview"
+    }
+  },
+
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "src/main.py"
+      ]
+    },
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  },
+  "postStartCommand": "./init.sh"
+}
