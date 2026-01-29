@@ -145,15 +145,15 @@ M = [  # identiy matrix
     [0, 1, 0],
     [0, 0, 1],
 ]
-cx,cy=240,240
-cx,cy= cx,cy-30
+L = 0
+cx,cy=720,182
 
 M=mat_mul(
     mat_translate(cx,cy),mat_mul(mat_rotate(angle),mat_translate(-cx,-cy)),
     ) 
 
 def update():
-    global M, angle
+    global M, angle, L,cx,cy
     angle += 0.03  # increment rotation every frame
 
     # Pulsating scale
@@ -165,41 +165,48 @@ def update():
     M_translate = mat_translate(100, 75)  # center around (0, 0)
 
    # M = mat_mul(M_translate, mat_mul(M_rotate, M_scale))
+    cx -=5
+    M= mat_mul(mat_translate(cx,cy),mat_mul(mat_rotate(-angle),mat_translate(-cx,-cy)))
+    L += 5
 
-
+    if cx<-220:
+        cx=720
+        L=0
 def draw():
 
     pyxel.cls(0)
 
-    pyxel.rect(0,0,720,60,5)
-    pyxel.rect(0,60,720,70,7)
-    pyxel.rect(0,70,720,290,8)
-    pyxel.rect(0,290,720,300,7)
-    pyxel.rect(0,300,720,360,5)
+    pyxel.rect(0,0,720,360,0)
 
-    pyxel.rect(420,150,120,70,15)
-    pyxel.elli (405,160,20,40,15)
-    pyxel.elli (535,160,20,40,15)
-    pyxel.elli (435,150,35,10,7)
-    pyxel.elli (485,150,35,10,7)
-    win_x,win_y,win_r=500,155,5
-    pyxel.circ(win_x,win_y,win_r, 4)
-    pyxel.circb(win_x,win_y,win_r, 4)
+    pyxel.rect(5,1,720,60,5)
+    pyxel.rect(1,61,720,70,7)
+    pyxel.rect(1,71,720,290,8)
+    pyxel.rect(1,291,720,300,7)
+    pyxel.rect(1,301,720,360,5)
+# flag
 
-    win_x,win_y,win_r=450,155,5
-    pyxel.circ(450,155,5, 4)
-    pyxel.circb(win_x,win_y,win_r, 4)
+    pyxel.rect(cx-240+420,150,120,70,15)
+    pyxel.rect(cx-240+420,85,120,50,0)
+    pyxel.circ(cx-240+480,210,60,15)
+    pyxel.circ(cx-240+480,150,60,15)
+    pyxel.rect(cx-240+420,85,120,15,0)
+#Head
 
-    pyxel.elli (440,190,60,40,0)
+    pyxel.elli (cx-240+405,160,20,40,15)
+    pyxel.elli (cx-240+535,160,20,40,15)
+    pyxel.elli (cx-240+435,150,35,10,7)
+    pyxel.elli (cx-240+485,150,35,10,7)
+    pyxel.circ(cx-240+500,155,5,4)
+    pyxel.circ(cx-240+450,155,5, 4)
+#Eyes and ears
 
-    pyxel.rect(420,85,120,15,0)
+    pyxel.elli (cx-240+440,190,60,40,0)
+#mouth
 
-    
-    pyxel.circ(240,180,82,col=0)
-    pyxel.circ(240,180,80,col=7)
-    tri_transformed(M,cx, cy, 170, 160, 310, 160, col=8)
-    tri_transformed(M,cx, cy, 240, 110, 200, 240, col=8)
-    tri_transformed(M,cx, cy, 240, 110, 280, 240, col=8)
-
+    pyxel.circ(cx,180,82,col=0)
+    pyxel.circ(cx,180,80,col=7)
+    tri_transformed(M,cx, 210, cx-70, 160, cx+70, 160, col=8)
+    tri_transformed(M,cx, 210, cx, 110, cx-40, 240, col=8)
+    tri_transformed(M,cx, 210, cx, 110, cx+40, 240, col=8)
 
 pyxel.run(update, draw)
