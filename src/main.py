@@ -2,7 +2,6 @@ import pyxel
 import math
 import random
 
-
 # -------------------------------------------------
 # Matrix Transform Functions
 # -------------------------------------------------
@@ -146,14 +145,15 @@ M = [  # identiy matrix
     [0, 0, 1],
 ]
 L = 0
+ck=0
 cx,cy=720,182
 
 M=mat_mul(
     mat_translate(cx,cy),mat_mul(mat_rotate(angle),mat_translate(-cx,-cy)),
     ) 
-
+T= mat_scale(1,1)
 def update():
-    global M, angle, L,cx,cy
+    global M, angle, L,cx,cy,ck,T
     angle += 0.03  # increment rotation every frame
 
     # Pulsating scale
@@ -167,11 +167,13 @@ def update():
    # M = mat_mul(M_translate, mat_mul(M_rotate, M_scale))
     cx -=5
     M= mat_mul(mat_translate(cx,cy),mat_mul(mat_rotate(-angle),mat_translate(-cx,-cy)))
+    T= mat_scale(1,1)
     L += 5
-
+    ck = random.randint(-1+ck,1+ck)
     if cx<-220:
         cx=720
         L=0
+        ck=0
 def draw():
 
     pyxel.cls(0)
@@ -200,8 +202,10 @@ def draw():
     pyxel.circ(cx-240+450,155,5, 4)
 #Eyes and ears
 
-    pyxel.elli (cx-240+440,190,60,40,0)
-#mouth
+    pyxel.elli (cx+200,190,60,40,0)
+
+   # ellipse_transformed(T,cx+50,200,180,15,14)
+#mouthand tongue
 
     pyxel.circ(cx,180,82,col=0)
     pyxel.circ(cx,180,80,col=7)
@@ -209,4 +213,7 @@ def draw():
     tri_transformed(M,cx, 210, cx, 110, cx-40, 240, col=8)
     tri_transformed(M,cx, 210, cx, 110, cx+40, 240, col=8)
 
+    T1=mat_scale(0.5,0.5)  
+    ellipse_transformed (T1,cx-80,200,70,15,14)
+    pyxel.elli (cx-80,200,70,15,14)
 pyxel.run(update, draw)
