@@ -147,14 +147,23 @@ M = [  # identiy matrix
 L = 0
 ck=0
 cx,cy=720,182
-
+J=0
+D=0
+a=1
 M=mat_mul(
     mat_translate(cx,cy),mat_mul(mat_rotate(angle),mat_translate(-cx,-cy)),
     ) 
 T= mat_scale(1,1)
 def update():
-    global M, angle, L,cx,cy,ck,T
+    global M, angle, L,cx,cy,ck,T,J,D,a
     angle += 0.03  # increment rotation every frame
+    if J<-150:
+        a=-1
+   
+    if pyxel.btnp (pyxel.KEY_UP):
+        D -=1
+    if D<0 and J>-150:
+        J-= 5*a
 
     # Pulsating scale
     s = 1 + 0.5 * math.sin(angle * 2)
@@ -187,24 +196,24 @@ def draw():
     pyxel.rect(1,301,720,360,5)
 # flag
 
-    pyxel.rect(cx-240+420,150,120,70,15)
-    pyxel.rect(cx-240+420,85,120,50,0)
-    pyxel.circ(cx-240+480,210,60,15)
-    pyxel.circ(cx-240+480,150,60,15)
-    pyxel.rect(cx-240+420,85,120,15,0)
+    pyxel.rect(cx-240+420,150+J,120,70,15)
+    pyxel.rect(cx-240+420,85+J,120,50,0)
+    pyxel.circ(cx-240+480,210+J,60,15)
+    pyxel.circ(cx-240+480,150+J,60,15)
+    pyxel.rect(cx-240+420,85+J,120,15,0)
 #Head
 
-    pyxel.elli (cx-240+405,160,20,40,15)
-    pyxel.elli (cx-240+535,160,20,40,15)
-    pyxel.elli (cx-240+435,150,35,10,7)
-    pyxel.elli (cx-240+485,150,35,10,7)
-    pyxel.circ(cx-240+500,155,5,4)
-    pyxel.circ(cx-240+450,155,5, 4)
+    pyxel.elli (cx-240+405,160+J,20,40,15)
+    pyxel.elli (cx-240+535,160+J,20,40,15)
+    pyxel.elli (cx-240+435,150+J,35,10,7)
+    pyxel.elli (cx-240+485,150+J,35,10,7)
+    pyxel.circ(cx-240+500,155+J,5,4)
+    pyxel.circ(cx-240+450,155+J,5, 4)
 #Eyes and ears
 
-    pyxel.elli (cx+200,190,60,40,0)
+    pyxel.elli (cx+200,190+J,60,40,0)
 
-   # ellipse_transformed(T,cx+50,200,180,15,14)
+  #  ellipse_transformed(T,cx+30,200,180,15,14)
 #mouthand tongue
 
     pyxel.circ(cx,180,82,col=0)
@@ -213,7 +222,5 @@ def draw():
     tri_transformed(M,cx, 210, cx, 110, cx-40, 240, col=8)
     tri_transformed(M,cx, 210, cx, 110, cx+40, 240, col=8)
 
-    T1=mat_scale(0.5,0.5)  
-    ellipse_transformed (T1,cx-80,200,70,15,14)
-    pyxel.elli (cx-80,200,70,15,14)
+   # pyxel.elli (cx-80,200,70,15,14)
 pyxel.run(update, draw)
